@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+<!-- main content (form to make a blog post) for logged in users !-->
+
+{% block content %}
+    <h1>Hi, {{ current_user.username }}!</h1>
+    
+    {% if form %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.post.label }}<br>
+            {{ form.post(cols=32, rows=4) }}<br>
+            {% for error in form.post.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% endif %}
+    
+    {% for post in posts %}
+    <p>
+      {% include "_post.html" %}
+    </p>
+    {% endfor %}
+    
+    
+    <!-- pagination !-->
+    {% if prev_url %}
+    <a href="{{ prev_url }}">Newer posts</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url}}">Older Posts</a>
+    {% endif %}
+{% endblock %}
